@@ -1,7 +1,7 @@
 import React, {useState, useRef, useEffect} from 'react';
 import Counter from './components/counter';
 import VideoFilter from './components/video-filter';
-// import { Button } from './App.style'
+import { Container, Button, TopContainer, Header, Video, Controls } from './App.style'
 interface State {
     constraints: {
       video: boolean,
@@ -38,7 +38,7 @@ const App = () =>{
   const [videoState, setVideoState] = useState<State>(initialState);
   const [start, setStart] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  // const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const prevState = usePrevious(videoState);
   const handleStart = () => {
@@ -53,7 +53,6 @@ const App = () =>{
 
   const setCanvasAndVideoHeight = (height: any) => {
     if(videoRef.current) videoRef.current.setAttribute("height", height);
-    if(canvasRef.current) canvasRef.current.setAttribute("height", height);
   };
 
   const handleCanPlay = () => {
@@ -99,22 +98,21 @@ const App = () =>{
 
 
   return (
-    <div className="container">
-      <div className="navbar">
+    <Container>
+      <Header>
         <h1>Video Stream</h1>
-      </div>
-    <div className="top-container">
-      <video autoPlay playsInline muted id="video" ref={videoRef}  onCanPlay={handleCanPlay}>Stream not available...</video>
-  
-      <canvas id="canvas" ref={canvasRef}></canvas>
+      </Header>
+    <TopContainer>
+      <Video autoPlay playsInline muted id="video" ref={videoRef}  onCanPlay={handleCanPlay}>Stream not available...</Video>
+      {/* <Canvas id="canvas" ref={canvasRef}></Canvas> */}
       <Counter state={start} />
-      <div className="controls">
+      <Controls>
         <Button id="start-btn" onClick={() => handleStart()} disabled={start}>Start</Button>
         <Button id="stop-btn" onClick={() => handleStop()} disabled={!start}>Stop</Button>
         <VideoFilter onChangeHandler={onChangeHandler} filter={videoState.filter}/>
-      </div>
-    </div>
-    </div>
+      </Controls>
+    </TopContainer>
+    </Container>
   );
 }
 

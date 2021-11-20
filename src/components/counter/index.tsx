@@ -1,5 +1,6 @@
 import React, {useEffect, useRef} from "react";
 import {useNativeCountupNumber} from "./hook/countup.number";
+import { CounterDiv } from './style';
 
 interface Props {
   state: boolean;
@@ -14,7 +15,7 @@ const Counter = (props: Props) => {
     useEffect(() => {
       if(state) {
         nativeCountup.onIncrease = (value: number) => {
-          if (countupMessage.current) countupMessage.current.textContent = `${value} segundos.`;
+          if (countupMessage.current) countupMessage.current.textContent = `${value} ${value > 1 ? 'segundos' : 'segundo'}`;
         };
         nativeCountup.start(lapsedTime);
       } else {
@@ -28,9 +29,9 @@ const Counter = (props: Props) => {
     
     return (
         <div className="counter-container">
-        <div className="counter">
+        <CounterDiv>
           <span ref={countupMessage}>{lapsedTime}</span>
-        </div>
+        </CounterDiv>
       </div>
     );
 }
